@@ -2,14 +2,35 @@ class Simulation {
     constructor(ndots, infectRatio, infectDuration, simDuration){
         this.dots = [];
         this.ndots = ndots;
-        this.nworks = Math.floor(ndots/10);
-        this.npleasures = Math.floor(ndots/20);
-        this.nhomes = Math.floor(ndots/4);
+        this.nworks = Math.ceil(ndots/10);
+        this.npleasures = Math.ceil(ndots/20);
+        this.nhomes = Math.ceil(ndots/4);
         this.infectRatio = infectRatio;
         this.infectDuration = infectDuration;
-        this.phase = 0;
+        this.step = 0; // 600
         this.simDuration = simDuration;
+
         this.initializeDots(ndots, this.nworks);
+        this.initializePos();
+    }
+
+    initializeDots(ndots, nworks) {
+        for(let i = 0; i < ndots; ++i) {
+            this.dots[i] = new Dot(Math.floor(i/4), Math.floor(Math.random() * nworks), -1);
+        }
+        this.dots[0].state = 0; // TODO: infectem un dot;
+    }
+
+    initializePos() {
+        this.initializePosHouses();
+        this.initializePosWorks();
+        this.initializePosPleasure();
+    }
+
+    initializePosHouses() {
+        for (let i = 0; i < this.nhomes; i++) {
+            this.housesPos.push()
+        }
     }
 
     infected() {
@@ -74,13 +95,6 @@ class Simulation {
                 }
                 return [false, [infected]];
         }
-    }
-
-    initializeDots(ndots, nworks) {
-        for(let i = 0; i < ndots; ++i) {
-            this.dots[i] = new Dot(Math.floor(i/4), Math.floor(Math.random() * nworks), -1);
-        }
-        this.dots[0].state = 0; // TODO: infectem un dot;
     }
 
     propagateWork() {
@@ -150,19 +164,63 @@ class Simulation {
         }
     }
 
-    run() {
-        while (this.phase < this.simDuration*3) {
-            if (this.phase % 3 === 0) { // dots in houses
-                this.propagateHome();
-            } else if (this.phase % 3 === 1) { // dots in work
-                this.propagateWork();
-            } else { // dots in pleasures
-                this.propagatePleasure();
-                this.nextDay();
-            }
-
-            this.phase ++;
+    moveDots() {
+        for(let i = 0; i < this.ndots; ++i) {
+            this.dots[i].move();
         }
+    }
+
+    showDots() {
+        for(let i = 0; i < this.ndots; ++i) {
+            this.dots[i].show(this.d);
+        }
+    }
+
+    homeToWork() {
+        for(let i = 0; i < this.ndots; ++i) {
+            let pos = this.workPos[this.dots[i].work]; // {x: 0, y: 0}
+            this.dots[i].goTo(pos, 0.5, 100); // TODO : scale
+        }
+    }
+
+    workToPleasure() {
+        for(let i = 0; i < this.ndots; ++i) {
+            let pos = this.pleasurePos[this.dots[i].pleasure]; // {x: 0, y: 0}
+            this.dots[i].goTo(pos, 0.5, 100); // TODO : scale
+        }
+    }
+
+    pleasureToHome() {
+        for(let i = 0; i < this.ndots; ++i) {
+            let pos = this.housesPos[this.dots[i].home]; // {x: 0, y: 0}
+            this.dots[i].goTo(pos, 0.5, 100); // TODO : scale
+        }
+    }
+
+    startSim() {
+        this.d = new DrawTool("myCanvas", window.innerHeight, window.innerWidth);
+        this.d.translate(this.d.width/2, this.d.height/2);
+
+        this.d.setInterval(this.update, 10);
+    }
+
+    update() {
+        if(this.step === 0) this.propagateHome();
+        if(this.step === 199) this.homeToWork();
+
+        if(this.step === 200) this.propagateWork();
+        if(this.step === 399) this.workToPleasure();
+
+
+        if(this.step === 400) this.propagatePleasure();
+        if(this.step === 599) this.pleasureToHome();
+        if(this.step === 599) this.nextDay();
+
+        this.step ++;
+        if (this.step >= 600) this.step = 0;
+
+        this.moveDots();
+        this.showDots();
     } 
 
 }
