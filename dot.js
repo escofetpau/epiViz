@@ -6,6 +6,7 @@ class Dot {
     this.state = state;
     this.phasesSick = 0;
     this.infectRatio = infectRatio/2;
+    this.focus = false;
 
     // -1 S
     //  0 I
@@ -49,6 +50,7 @@ class Dot {
   */
   show(d) {
     d.circle(this.x, this.y, this.size, {color: this.stateColor()});
+    if (this.focus) d.circle(this.x, this.y, this.size + 2, {sColor: "yellow", fill: false, stroke: true});
   }
 
   stateColor() {
