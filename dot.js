@@ -61,22 +61,47 @@ class Dot {
   }
 
   move() {
-    if (dist(this.pos(), this.destination) < (this.travelDistance/2)) {
+    // Començar el viatge en un step random
+    if (this.step === this.startStep){ this.startTravel(); console.log(this.step)}
+    this.step += 1;
+
+    // Si no està viatjant no fer res més
+    if (!this.onTravel) return;
+    
+    // Si està al mig del viatge invertir l'acceleració
+    if (this.travelingFirst && dist(this.pos(), this.destination) < (this.travelDistance/2)) {
+      this.travelingFirst = false;
       this.acc.x = -this.acc.x; 
       this.acc.y = -this.acc.y; 
     }
-    if (dot.onDestination()) dot.stop();
+    
+    // Si ha arribat a lloc acabar el viatge
+    if (dot.onDestination()) {
+      dot.stop();
+      this.onTravel = false;
+    }
+
+    // Fer update del moviment
     this.vel.x += this.acc.x;
     this.vel.y += this.acc.y;
     this.x += this.vel.x;
     this.y += this.vel.y;
   }
 
-  goTo(destination, acc) {
-    this.fromPos = this.pos();
-    this.travelDistance = dist(this.fromPos, destination);
+  goTo(destination, acc, steps) {
+    this.startStep = Math.floor(Math.random() * steps); 
     this.destination = destination;
-    this.setAcc(acc);
+    this.waitingForStep = true;
+    this.step = 0;
+    this.newAcc = acc;
+  }
+
+  startTravel() {
+    this.fromPos = this.pos();
+    this.setAcc(this.newAcc);
+    this.travelingFirst = true; 
+    this.onTravel = true;
+    this.travelDistance = dist(this.fromPos, this.destination);
   }
 
   stop() {
@@ -85,7 +110,7 @@ class Dot {
   }
 
   onDestination() {
-    return dist(this.pos(), this.destination) < 3;
+    return dist(this.pos(), this.destination) <= 3;
   }
 
   pos() {
