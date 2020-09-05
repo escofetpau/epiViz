@@ -301,6 +301,8 @@ class Simulation {
 
         sym.moveDots();
         sym.showDots();
+
+        if (sym.symSteps > sym.simDuration * sym.nsteps) sym.stop();
     } 
 
     updateDataChart(){

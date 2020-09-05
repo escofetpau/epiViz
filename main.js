@@ -1,24 +1,25 @@
-const s = new Simulation(500, 0.05, 10, 30, document);
-s.start();
-console.log("susceptible: " + s.infected()[0].toString());
-console.log("infected: " + s.infected()[1].toString());
-console.log("recovered: " + s.infected()[2].toString());
+
 
 function getInputsAndStart() {
-    console.log(document.getElementById("textInput1").value)
-    console.log(document.getElementById("textInput2").value)
-    console.log(document.getElementById("textInput3").value)
-    console.log(document.getElementById("textInput4").value)
+  const people = document.getElementById("textInput1").value;
+  const days = document.getElementById("textInput2").value;
+  const ratio = document.getElementById("textInput3").value;
+  const durationIllnes = document.getElementById("textInput4").value;
+
+  document.getElementById("button").style.visibility = "hidden";
+
+  const s = new Simulation(people, ratio, durationIllnes, days, document);
+  s.start();
 }
 
 
 function closeModal() {
-    let modal = document.getElementsByClassName("modal-wrapper")[0];
-    modal.style.visibility = "hidden";
+  let modal = document.getElementsByClassName("modal-wrapper")[0];
+  modal.style.visibility = "hidden";
 }
 
 function openModal() {
-    let modal = document.getElementsByClassName("modal-wrapper")[0];
-    modal.style.visibility = "visible";
+  let modal = document.getElementsByClassName("modal-wrapper")[0];
+  modal.style.visibility = "visible";
 }
 

@@ -3,6 +3,7 @@ body {
     width: 100vw;
     margin: 0;
     font-family: 'Kufam', cursive;
+    background-color: #264653;
 }
 
 canvas {
