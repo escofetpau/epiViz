@@ -109,7 +109,7 @@ p {
     z-index: 1;
     display: grid;
     place-items: center;
-    /* visibility: hidden; */
+    visibility: hidden;
 }
 
 .modal-content {
