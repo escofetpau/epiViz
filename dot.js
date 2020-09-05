@@ -18,7 +18,8 @@ class Dot {
     this.size = 3;
     this.step = 0;
     
-    this.initFase = Math.random() * 6.5;
+    this.vibrateFase = Math.random() * Math.PI * 2;
+    this.vibrateAngle = Math.random() * Math.PI * 2;
   }
 
   newPleasure(nPleasures) {
@@ -53,7 +54,7 @@ class Dot {
   stateColor() {
     if (this.state === -1) return "#2a9d8f";
     if (this.state === 0) return "#e76f51";
-    if (this.state === 1) return "#264653";
+    if (this.state === 1) return "#f1faee";
   }
 
   setAcc(acc) {
@@ -73,7 +74,8 @@ class Dot {
 
     // Si no està viatjant no fer res més
     if (!this.onTravel) {
-      this.x += Math.sin((this.initFase + this.step) * 0.5);
+      this.x += this.vibrateAngle * 0.05 * Math.sin(this.vibrateFase + this.step * 0.2);
+      this.y += this.vibrateAngle * 0.05 * Math.cos(this.vibrateFase + this.step * 0.2);
       return;
     }
     
