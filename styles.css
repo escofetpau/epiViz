@@ -130,3 +130,23 @@ h2 {
 .float-right {
     float: right;
 }
+
+#button{
+    margin-top: 10%;
+    margin-left: 8%;
+    margin-right: auto;
+    width: 50%;
+    border-radius: 5px;
+    background-color: #d3d3d3;
+    opacity: 0.7;
+    border: 0;
+}
+
+#button:hover {
+    opacity: 1; 
+}
+
+p{
+    margin-top: 15px;
+    margin-bottom: 7px;
+}
