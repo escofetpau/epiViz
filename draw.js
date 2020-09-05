@@ -125,7 +125,7 @@ DrawTool.prototype.endFillLine = function (options) {
 
 DrawTool.prototype.clearRect = function (x1, y1, x2, y2, color='white') {
     this.ctx.fillStyle = color;
-    this.ctx.clearRect(x1, y1, x2, y2);
+    this.ctx.clearRect(x1 - this.xOffset, y1 - this.yOffset, x2 - this.xOffset, y2 - this.yOffset);
 } 
     
 DrawTool.prototype.clearAll = function () {

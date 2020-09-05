@@ -10,9 +10,9 @@ class Dot {
     //  0 I
     //  1 R
 
-    this.x = 300;
-    this.y = 300;
-    this.size = 10;
+    this.x = 0;
+    this.y = 0;
+    this.size = 70;
   }
 
   newPleasure(nPleasures) {
