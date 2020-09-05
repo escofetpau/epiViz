@@ -14,6 +14,7 @@ class Simulation {
         this.homePos = [];
         this.workPos = [];
         this.pleasurePos = [];
+        this.arrFib = [];
 
         this.chartData = [
             {
@@ -50,6 +51,8 @@ class Simulation {
         this.initializePosPleasure();
 
         this.addColorsCanvasJS();
+
+        this.resetArrFib();
     }
 
     initializePosHome() {
@@ -75,7 +78,7 @@ class Simulation {
             [
                 "#e76f51",
                 "#2a9d8f",
-                "#264653"            
+                "#f1faee"            
             ]);
     }
 
@@ -161,6 +164,7 @@ class Simulation {
             }
         }
         this.plotChart();
+        this.resetArrFib();
     }
 
     propagateHome() {
@@ -181,6 +185,7 @@ class Simulation {
             }
         }
         this.plotChart();
+        this.resetArrFib();
     }
 
     propagatePleasure() {
@@ -201,6 +206,7 @@ class Simulation {
             }
         }
         this.plotChart();
+        this.resetArrFib();
     }
 
     setPleasures() {
@@ -229,21 +235,21 @@ class Simulation {
 
     homeToWork() {
         for(let i = 0; i < this.ndots; ++i) {
-            let pos = this.workPos[this.dots[i].work]; // {x: 0, y: 0}
+            let pos = this.calculate_pos(this.workPos[this.dots[i].work], this.dots[i].work);
             this.dots[i].goTo(pos, 0.5, this.nsteps/6); // TODO : scale
         }
     }
 
     workToPleasure() {
         for(let i = 0; i < this.ndots; ++i) {
-            let pos = this.pleasurePos[this.dots[i].pleasure]; // {x: 0, y: 0}
+            let pos = this.calculate_pos(this.pleasurePos[this.dots[i].pleasure], this.dots[i].pleasure);
             this.dots[i].goTo(pos, 0.5, this.nsteps/6); // TODO : scale
         }
     }
 
     pleasureToHome() {
         for(let i = 0; i < this.ndots; ++i) {
-            let pos = this.homePos[this.dots[i].home]; // {x: 0, y: 0}
+            let pos = this.calculate_pos(this.homePos[this.dots[i].home], this.dots[i].home);
             this.dots[i].goTo(pos, 0.5, this.nsteps/6); // TODO : scale
         }
     }
@@ -258,6 +264,7 @@ class Simulation {
 
     update(sym) {
         sym.d.clearAll();
+        sym.d.background("#264653");
 
         if(sym.step === 0) {
             sym.propagateHome();
@@ -301,13 +308,21 @@ class Simulation {
         this.updateDataChart();
         var chart = new CanvasJS.Chart("chartContainer", {
         colorSet: "greenShades",
+        backgroundColor: "#264653",
+        legend : {
+            fontColor: "#f1faee",
+        },
         animationEnabled: false,
         axisX:{
             title: "Days",
-            minimum: -0.02
+            labelFontColor: "#f1faee",
+            minimum: -0.02,
+            titleFontColor: "#f1faee"
         },
         axisY:{
-            title:"Population"
+            title:"Population",
+            labelFontColor: "#f1faee",
+            titleFontColor: "#f1faee"
         },
         toolTip:{
             shared: true
@@ -315,34 +330,46 @@ class Simulation {
         data: this.chartData
         });
         chart.render();
-      }
-}
+    }
 
+    calculate_pos(pos, elem) {
+        let i = this.arrFib[elem];
+        this.arrFib[elem] ++;
+        let pos2 = this.fibonacci_spiral_disc_i(i);
+        return {x: pos.x + pos2.x, y: pos.y + pos2.y};
+    }
 
-function fibonacci_spiral_disc (num_points, k) {
-    var positions = [];
-    let gr = 1.6180339887498948482 
-    let ga = 2.39996322972865332   
+    resetArrFib() {
+        for (let i = 0; i < this.ndots; i++) {
+            this.arrFib[i] = 0;
+        }
+    }
 
-    for (let i = 1; i <= num_points; ++i) {
+    fibonacci_spiral_disc (num_points, k) {
+        var positions = [];
+        let gr = 1.6180339887498948482 
+        let ga = 2.39996322972865332   
+    
+        for (let i = 1; i <= num_points; ++i) {
+            const r = Math.sqrt(i) * k;
+            const theta = ga * i;
+    
+            const x = Math.cos(theta) * r;
+            const y = Math.sin(theta) * r;
+    
+            positions.push({x, y});
+        }
+        return positions;
+    }
+
+    fibonacci_spiral_disc_i (i) {
+        const k = 5;
+        let gr = 1.6180339887498948482
+        let ga = 2.39996322972865332
         const r = Math.sqrt(i) * k;
         const theta = ga * i;
-
         const x = Math.cos(theta) * r;
         const y = Math.sin(theta) * r;
-
-        positions.push({x, y});
+        return {x, y};    
     }
-    return positions;
-}
-
-function fibonacci_spiral_disc_i (i) {
-    const k = 5;
-    let gr = 1.6180339887498948482
-    let ga = 2.39996322972865332
-    const r = Math.sqrt(i) * k;
-    const theta = ga * i;
-    const x = Math.cos(theta) * r;
-    const y = Math.sin(theta) * r;
-    return {x, y};    
 }

@@ -50,7 +50,7 @@ class Dot {
   stateColor() {
     if (this.state === -1) return "#2a9d8f";
     if (this.state === 0) return "#e76f51";
-    if (this.state === 1) return "#264653";
+    if (this.state === 1) return "#f1faee";
   }
 
   setAcc(acc) {
