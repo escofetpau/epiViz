@@ -334,6 +334,7 @@ class Simulation {
         data: this.chartData
         });
         chart.render();
+        document.getElementsByClassName("canvasjs-chart-credit")[0].remove();
     }
 
     calculate_pos(pos, elem) {
