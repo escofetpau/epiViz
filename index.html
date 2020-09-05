@@ -39,13 +39,16 @@
             <input class = "outputvalue" type="text" id="textInput4" value="10" readonly>
         </div>
 
-        <button type="button" id="button">Start simulation</button>
+        <button type="button" id="button" onclick="startSimulation()">Start simulation</button>
 
+        
     </div>
     <script>
         function updateTextInput(val, id) {
             document.getElementById(id).value=val; 
         }
+
+        
     </script>
 
     <div class="phase"></div>
@@ -72,6 +75,11 @@
     <script src="simulation.js" type="text/javascript"></script>
     <script src="dot.js" type="text/javascript"></script>
     <script src="main.js" type="text/javascript"></script>
+    <script>
+        function startSimulation() {
+            getInputsAndStart()
+        }
+    </script>
 
 
 </body>
