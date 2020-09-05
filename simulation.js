@@ -3,7 +3,7 @@ class Simulation {
         this.dots = [];
         this.ndots = ndots;
         this.nworks = Math.ceil(ndots/10);
-        this.npleasures = Math.ceil(ndots/20);
+        this.npleasures = Math.ceil(ndots/5);
         this.nhomes = Math.ceil(ndots/4);
         this.infectDuration = infectDuration;
         this.totalInfectRatio = infectRatio;
@@ -185,7 +185,7 @@ class Simulation {
 
     propagatePleasure() {
         for(let i = 0; i < this.npleasures; ++i) {
-            const [infected, pleasurers] = this.filter("pleasue", i);
+            const [infected, pleasurers] = this.filter("pleasure", i);
             if (!infected) continue;
             for(let k = 0; k < pleasurers.length; ++k) {
                 if (pleasurers[k].state === 0) {
@@ -209,9 +209,9 @@ class Simulation {
         }
     }
 
-    nextDay() {
+    nextPhase() {
         for(let i = 0; i < this.ndots; ++i) {
-            this.dots[i].nextDay(this.infectDuration);
+            this.dots[i].nextPhase(this.infectDuration*3);
         }
     }
 
@@ -259,18 +259,26 @@ class Simulation {
     update(sym) {
         sym.d.clearAll();
 
-        if(sym.step === 0) sym.propagateHome();
+        if(sym.step === 0) {
+            sym.propagateHome();
+            sym.nextPhase();
+        }
         if(sym.step === this.nsteps/3 -1) sym.homeToWork();
 
-        if(sym.step === this.nsteps/3) sym.propagateWork();
+        if(sym.step === this.nsteps/3) {
+            sym.propagateWork();
+            sym.nextPhase();
+        }
         if(sym.step === 2*this.nsteps/3 -1) {
             this.setPleasures();
             sym.workToPleasure();
         }
 
-        if(sym.step === 2*this.nsteps/3) sym.propagatePleasure();
+        if(sym.step === 2*this.nsteps/3) {
+            sym.propagatePleasure();
+            sym.nextPhase();
+        }
         if(sym.step === this.nsteps -1) sym.pleasureToHome();
-        if(sym.step === this.nsteps -1) sym.nextDay();
 
         sym.step ++;
         sym.symSteps ++;
