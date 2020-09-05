@@ -51,6 +51,13 @@ p {
     display: grid;
     grid-template-columns: 65% 15%;
   }
+
+.inputs-wrapper2 {
+    position: absolute;
+    top: 2em;
+    right: 1em;
+    color: #b0b5ae;
+}
   
   
   .scrollbar {

@@ -41,9 +41,26 @@
 
         <button type="button" id="button" onclick="startSimulation()">Start simulation</button>
         <button type="button" id="button2" onclick="clearScreen()">Clear Screen</button>
-
-        
     </div>
+
+    <div class="inputs-wrapper2" id="control-form">
+        <label for="control">Take control: </label>
+        <select name="control" id="control">
+            <option value="none">None</option>
+            <option value="family">Family</option>
+            <option value="company">Company</option>
+        </select><br><br>
+
+        <input type="checkbox" id="mask" name="mask">
+        <label for="mask">Wear a mask</label><br><br>
+
+        <input type="checkbox" id="distance" name="distance">
+        <label for="distance">Keep Social Distancing</label><br><br>
+
+        <input type="checkbox" id="hands" name="hands">
+        <label for="hands">Wash Hands</label><br><br>
+    </div>
+
     <script>
         function updateTextInput(val, id) {
             document.getElementById(id).value=val; 
