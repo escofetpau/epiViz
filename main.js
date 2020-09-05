@@ -26,3 +26,29 @@ function openModal() {
   modal.style.visibility = "visible";
 }
 
+var aboutProjText = "Text1";
+var aboutUsText = "Text2";
+
+function checkChoice(id) {
+    let otherId;
+    let contentText;
+    if (id === "aboutProj") {
+        otherId = "aboutUs";
+        contentText = aboutProjText; 
+    }
+    else {
+        otherId = "aboutProj";
+        contentText = aboutUsText; 
+    } 
+
+    let clicked = document.getElementById(id);
+    let other = document.getElementById(otherId);
+
+    clicked.style.backgroundColor = "black";
+    clicked.style.color = "white";
+
+    other.style.backgroundColor = "white";
+    other.style.color = "black";
+
+    document.getElementById("contentText").innerText = contentText;
+}
