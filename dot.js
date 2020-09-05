@@ -1,10 +1,11 @@
 class Dot {
-  constructor(home, work, state) {
+  constructor(home, work, state, infectRatio) {
     this.home = home;
     this.work = work;
     this.pleasure = 0;
     this.state = state;
     this.daysSick = 0;
+    this.infectRatio = infectRatio/2;
 
     // -1 S
     //  0 I
@@ -14,8 +15,7 @@ class Dot {
     this.y = -100;
     this.vel = {x: 0, y: 0};
     this.acc = {x: 0, y: 0};
-    this.size = 30;
-    this.destination = {x: 300, y: 100};
+    this.size = 3;
   }
 
   newPleasure(nPleasures) {
@@ -62,7 +62,7 @@ class Dot {
 
   move() {
     // Començar el viatge en un step random
-    if (this.step === this.startStep){ this.startTravel(); console.log(this.step)}
+    if (this.step === this.startStep) this.startTravel();
     this.step += 1;
 
     // Si no està viatjant no fer res més
@@ -76,8 +76,8 @@ class Dot {
     }
     
     // Si ha arribat a lloc acabar el viatge
-    if (dot.onDestination()) {
-      dot.stop();
+    if (this.onDestination()) {
+      this.stop();
       this.onTravel = false;
     }
 
@@ -110,7 +110,7 @@ class Dot {
   }
 
   onDestination() {
-    return dist(this.pos(), this.destination) <= 3;
+    return dist(this.pos(), this.destination) <= 25; // TODO
   }
 
   pos() {
