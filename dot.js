@@ -1,5 +1,5 @@
 class Dot {
-  constructor(home, work, state, infectRatio) {
+  constructor(home, work, state, infectRatio, homePos) {
     this.home = home;
     this.work = work;
     this.pleasure = 0;
@@ -11,8 +11,8 @@ class Dot {
     //  0 I
     //  1 R
 
-    this.x = -300;
-    this.y = -100;
+    this.x = homePos[home].x;
+    this.y = homePos[home].y;
     this.vel = {x: 0, y: 0};
     this.acc = {x: 0, y: 0};
     this.size = 3;
@@ -48,9 +48,9 @@ class Dot {
   }
 
   stateColor() {
-    if (this.state === -1) return "green";
-    if (this.state === 0) return "red";
-    if (this.state === 1) return "blue";
+    if (this.state === -1) return "#2a9d8f";
+    if (this.state === 0) return "#e76f51";
+    if (this.state === 1) return "#264653";
   }
 
   setAcc(acc) {

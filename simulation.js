@@ -6,56 +6,89 @@ class Simulation {
         this.npleasures = Math.ceil(ndots/20);
         this.nhomes = Math.ceil(ndots/4);
         this.infectDuration = infectDuration;
-        this.step = 0; // 600
+        this.totalInfectRatio = infectRatio;
+        this.step = 0;
+        this.symSteps = 0;
+        this.nsteps = 600;
         this.simDuration = simDuration;
         this.homePos = [];
         this.workPos = [];
         this.pleasurePos = [];
 
-        this.initializeDots(ndots, this.nworks, infectRatio);
+        this.chartData = [
+            {
+                type: "stackedArea100",
+                name: "Infected",
+                showInLegend: "true",
+                dataPoints: []
+            },
+            {
+                type: "stackedArea100",
+                name: "Susceptibles",
+                showInLegend: "true",
+                dataPoints: []
+            },
+            {
+                type: "stackedArea100",
+                name: "Recovered",
+                showInLegend: "true",
+                dataPoints: []
+        }];
     }
 
-    initializeDots(ndots, nworks, infectRatio) {
-        for(let i = 0; i < ndots; ++i) {
-            this.dots[i] = new Dot(Math.floor(i/4), Math.floor(Math.random() * nworks), -1, infectRatio);
+    initializeDots() {
+        for(let i = 0; i < this.ndots; ++i) {
+            this.dots[i] = new Dot(Math.floor(i/4), Math.floor(Math.random() * this.nworks), -1, this.totalInfectRatio, this.homePos);
         }
         this.dots[0].state = 0; // TODO: infectem un dot;
     }
 
-    initializePos() {
+    initialize() {
         this.initializePosHome();
+        this.initializeDots();
         this.initializePosWork();
         this.initializePosPleasure();
+
+        this.addColorsCanvasJS();
     }
 
     initializePosHome() {
         for (let i = 0; i < this.nhomes; i++) {
-            this.homePos.push({x: Math.random() * this.d.width - this.d.width/2, y: Math.random() * this.d.height - this.d.height/2}) // {x: 0, y: 0}
+            this.homePos.push({x: Math.random() * this.d.width - this.d.width/2, y: Math.random() * this.d.height - this.d.height/2});
         }
     }
 
     initializePosWork() {
         for (let i = 0; i < this.nhomes; i++) {
-            this.workPos.push({x: Math.random() * this.d.width - this.d.width/2, y: Math.random() * this.d.height - this.d.height/2}) // {x: 0, y: 0}
+            this.workPos.push({x: Math.random() * this.d.width - this.d.width/2, y: Math.random() * this.d.height - this.d.height/2});
         }
     }
 
     initializePosPleasure() {
         for (let i = 0; i < this.nhomes; i++) {
-            this.pleasurePos.push({x: Math.random() * this.d.width - this.d.width/2, y: Math.random() * this.d.height - this.d.height/2}) // {x: 0, y: 0}
+            this.pleasurePos.push({x: Math.random() * this.d.width - this.d.width/2, y: Math.random() * this.d.height - this.d.height/2});
         }
     }
 
+    addColorsCanvasJS() {
+        CanvasJS.addColorSet("greenShades",
+            [
+                "#e76f51",
+                "#2a9d8f",
+                "#264653"            
+            ]);
+    }
+
     infected() {
-        let susceptible = 0;
         let infected = 0;
+        let susceptible = 0;
         let recovered = 0;
         for(let i = 0; i < this.dots.length; i++) {
             if (this.dots[i].state === -1) susceptible ++;
             if (this.dots[i].state === 0) infected ++;
             if (this.dots[i].state === 1) recovered ++;
         }
-        return [susceptible, infected, recovered];
+        return [infected, susceptible, recovered];
     }
 
     filter(field, value) {
@@ -127,6 +160,7 @@ class Simulation {
                 }
             }
         }
+        this.plotChart();
     }
 
     propagateHome() {
@@ -146,10 +180,10 @@ class Simulation {
                 }
             }
         }
+        this.plotChart();
     }
 
     propagatePleasure() {
-        this.setPleasures()
         for(let i = 0; i < this.npleasures; ++i) {
             const [infected, pleasurers] = this.filter("pleasue", i);
             if (!infected) continue;
@@ -166,6 +200,7 @@ class Simulation {
                 }
             }
         }
+        this.plotChart();
     }
 
     setPleasures() {
@@ -195,28 +230,28 @@ class Simulation {
     homeToWork() {
         for(let i = 0; i < this.ndots; ++i) {
             let pos = this.workPos[this.dots[i].work]; // {x: 0, y: 0}
-            this.dots[i].goTo(pos, 0.5, 100); // TODO : scale
+            this.dots[i].goTo(pos, 0.5, this.nsteps/6); // TODO : scale
         }
     }
 
     workToPleasure() {
         for(let i = 0; i < this.ndots; ++i) {
             let pos = this.pleasurePos[this.dots[i].pleasure]; // {x: 0, y: 0}
-            this.dots[i].goTo(pos, 0.5, 100); // TODO : scale
+            this.dots[i].goTo(pos, 0.5, this.nsteps/6); // TODO : scale
         }
     }
 
     pleasureToHome() {
         for(let i = 0; i < this.ndots; ++i) {
             let pos = this.homePos[this.dots[i].home]; // {x: 0, y: 0}
-            this.dots[i].goTo(pos, 0.5, 100); // TODO : scale
+            this.dots[i].goTo(pos, 0.5, this.nsteps/6); // TODO : scale
         }
     }
 
     start() {
         this.d = new DrawTool("myCanvas", window.innerHeight, window.innerWidth);
         this.d.translate(this.d.width/2, this.d.height/2);
-        this.initializePos();
+        this.initialize();
 
         this.d.setInterval(() => this.update(this), 10);
     }
@@ -225,21 +260,53 @@ class Simulation {
         sym.d.clearAll();
 
         if(sym.step === 0) sym.propagateHome();
-        if(sym.step === 199) sym.homeToWork();
+        if(sym.step === this.nsteps/3 -1) sym.homeToWork();
 
-        if(sym.step === 200) sym.propagateWork();
-        if(sym.step === 399) sym.workToPleasure();
+        if(sym.step === this.nsteps/3) sym.propagateWork();
+        if(sym.step === 2*this.nsteps/3 -1) {
+            this.setPleasures();
+            sym.workToPleasure();
+        }
 
-
-        if(sym.step === 400) sym.propagatePleasure();
-        if(sym.step === 599) sym.pleasureToHome();
-        if(sym.step === 599) sym.nextDay();
+        if(sym.step === 2*this.nsteps/3) sym.propagatePleasure();
+        if(sym.step === this.nsteps -1) sym.pleasureToHome();
+        if(sym.step === this.nsteps -1) sym.nextDay();
 
         sym.step ++;
-        if (sym.step >= 600) sym.step = 0;
+        sym.symSteps ++;
+        if (sym.step >= this.nsteps) sym.step = 0;
 
         sym.moveDots();
         sym.showDots();
     } 
+
+    updateDataChart(){
+        let day = Math.floor(this.symSteps / this.nsteps);
+        let result = this.infected();
+
+        this.chartData[0].dataPoints.push({y: result[0], label: day.toString()});
+        this.chartData[1].dataPoints.push({y: result[1], label: day.toString()});
+        this.chartData[2].dataPoints.push({y: result[2], label: day.toString()});
+    }
+
+    plotChart() {
+        this.updateDataChart();
+        var chart = new CanvasJS.Chart("chartContainer", {
+        colorSet: "greenShades",
+        animationEnabled: false,
+        axisX:{
+            title: "Days",
+            minimum: -0.02
+        },
+        axisY:{
+            title:"Population"
+        },
+        toolTip:{
+            shared: true
+        },
+        data: this.chartData
+        });
+        chart.render();
+      }
 
 }

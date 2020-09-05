@@ -20,6 +20,14 @@ h1 {
     margin: 0;
 }
 
+#chartContainer {
+    position: absolute;
+    left: 0;
+    right: 0;
+    text-align: center;
+    bottom: 0;
+}
+
 .inputs-wrapper {
     top: 2em;
     left: 2em;
