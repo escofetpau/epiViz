@@ -132,9 +132,12 @@ DrawTool.prototype.clearAll = function () {
     this.ctx.clearRect(0 - this.xOffset, 0 - this.yOffset, this.width, this.height);
 }
 
-DrawTool.prototype.setInterval = function (fun, frames, clear) {
-    if (clear !== undefined) clearInterval(this.currentInterval);
+DrawTool.prototype.setInterval = function (fun, frames) {
     this.currentInterval = setInterval(fun, frames);
+}
+
+DrawTool.prototype.clearInterval = function () {
+    clearInterval(this.currentInterval);
 }
 
 DrawTool.prototype.rotate = function (angle) {

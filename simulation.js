@@ -256,6 +256,10 @@ class Simulation {
         this.d.setInterval(() => this.update(this), 10);
     }
 
+    stop() {
+        this.d.clearInterval();
+    }
+
     update(sym) {
         sym.d.clearAll();
 
@@ -315,7 +319,7 @@ class Simulation {
         data: this.chartData
         });
         chart.render();
-      }
+    }
 }
 
 

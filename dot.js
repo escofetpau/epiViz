@@ -16,6 +16,9 @@ class Dot {
     this.vel = {x: 0, y: 0};
     this.acc = {x: 0, y: 0};
     this.size = 3;
+    this.step = 0;
+    
+    this.initFase = Math.random() * 6.5;
   }
 
   newPleasure(nPleasures) {
@@ -69,7 +72,10 @@ class Dot {
     this.step += 1;
 
     // Si no està viatjant no fer res més
-    if (!this.onTravel) return;
+    if (!this.onTravel) {
+      this.x += Math.sin((this.initFase + this.step) * 0.5);
+      return;
+    }
     
     // Si està al mig del viatge invertir l'acceleració
     if (this.travelingFirst && dist(this.pos(), this.destination) <= (this.travelDistance/2)) {
