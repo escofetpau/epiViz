@@ -154,9 +154,15 @@ h2 {
     color: black;
 }
 
-.choice:hover {
+.choice-clicked {
     background-color: black;
     color: white;
+    
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-top: 5px;
+    border-radius: 5px;
+
 }
 
 .text-center {
