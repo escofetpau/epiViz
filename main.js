@@ -12,6 +12,9 @@ function getInputsAndStart() {
   s.start();
 }
 
+function clearScreen() {
+  location.reload();
+}
 
 function closeModal() {
   let modal = document.getElementsByClassName("modal-wrapper")[0];
