@@ -4,6 +4,7 @@ class Dot {
     this.work = work;
     this.pleasure = 0;
     this.state = state;
+    this.daysSick = 0;
 
     // -1 S
     //  0 I
@@ -15,7 +16,7 @@ class Dot {
   }
 
   newPleasure(nPleasures) {
-    this.pleasure = int(Math.random() * nPleasures);
+    this.pleasure = Math.floor(Math.random() * nPleasures);
   }
 
   infect(){
@@ -24,6 +25,16 @@ class Dot {
 
   recover(){
     this.state = 1;
+  }
+
+  nextDay(maxDays) {
+    if (this.state === 0) {
+      this.daysSick ++;
+      if (this.daysSick >= maxDays) {
+        this.daysSick = 0;
+        this.state = 1;
+      }
+    }
   }
 
   /*
