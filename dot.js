@@ -4,7 +4,7 @@ class Dot {
     this.work = work;
     this.pleasure = 0;
     this.state = state;
-    this.daysSick = 0;
+    this.phasesSick = 0;
     this.infectRatio = infectRatio/2;
 
     // -1 S
@@ -30,11 +30,11 @@ class Dot {
     this.state = 1;
   }
 
-  nextDay(maxDays) {
+  nextPhase(maxPhases) {
     if (this.state === 0) {
-      this.daysSick ++;
-      if (this.daysSick >= maxDays) {
-        this.daysSick = 0;
+      this.phasesSick ++;
+      if (this.phasesSick >= maxPhases) {
+        this.phasesSick = 0;
         this.state = 1;
       }
     }
