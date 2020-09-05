@@ -40,12 +40,15 @@ class Simulation {
 
     initializeDots() {
         for(let i = 0; i < this.ndots; ++i) {
-            this.dots[i] = new Dot(Math.floor(i/4), Math.floor(Math.random() * this.nworks), -1, this.totalInfectRatio, this.homePos);
+            let home = Math.floor(i/4);
+            let initPos = this.calculate_pos(this.homePos[home], home);
+            this.dots[i] = new Dot(home, Math.floor(Math.random() * this.nworks), -1, this.totalInfectRatio, initPos);
         }
         this.dots[0].state = 0; // TODO: infectem un dot;
     }
 
     initialize() {
+        this.resetArrFib();
         this.initializePosHome();
         this.initializeDots();
         this.initializePosWork();
@@ -53,7 +56,6 @@ class Simulation {
 
         this.addColorsCanvasJS();
 
-        this.resetArrFib();
     }
 
     initializePosHome() {
