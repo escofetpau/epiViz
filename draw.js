@@ -17,6 +17,19 @@ DrawTool.prototype.setup = function (canvas) {
 
 }    
 
+DrawTool.prototype.setHeight = function (height) {
+    console.log(this.canv)
+    this.canv.height = height;
+    this.width = this.canv.width;
+    this.height = this.canv.height;
+}
+
+DrawTool.prototype.setWidth = function (width) {
+    this.canv.width = width;
+    this.width = this.canv.width;
+    this.height = this.canv.height;
+}
+
 DrawTool.prototype.dot = function (x, y, options={color:'red'}) {
     this.ctx.fillStyle = options.color;
     this.ctx.fillRect(x, y, 1, 1);
