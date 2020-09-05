@@ -1,5 +1,5 @@
 class Simulation {
-    constructor(ndots, infectRatio, infectDuration, simDuration){
+    constructor(ndots, infectRatio, infectDuration, simDuration, phase){
         this.dots = [];
         this.ndots = ndots;
         this.nworks = Math.ceil(ndots/10);
@@ -15,6 +15,7 @@ class Simulation {
         this.workPos = [];
         this.pleasurePos = [];
         this.arrFib = [];
+        this.phaseText = phase;
 
         this.chartData = [
             {
@@ -78,7 +79,7 @@ class Simulation {
             [
                 "#e76f51",
                 "#2a9d8f",
-                "#f1faee"            
+                "#b0b5ae"            
             ]);
     }
 
@@ -234,6 +235,7 @@ class Simulation {
     }
 
     homeToWork() {
+        this.phaseText.querySelector('.phase').innerHTML = "Going to Work &#127891";
         for(let i = 0; i < this.ndots; ++i) {
             let pos = this.calculate_pos(this.workPos[this.dots[i].work], this.dots[i].work);
             this.dots[i].goTo(pos, 0.5, this.nsteps/6); // TODO : scale
@@ -241,6 +243,7 @@ class Simulation {
     }
 
     workToPleasure() {
+        this.phaseText.querySelector('.phase').innerHTML = "Going to Chill &#128131";
         for(let i = 0; i < this.ndots; ++i) {
             let pos = this.calculate_pos(this.pleasurePos[this.dots[i].pleasure], this.dots[i].pleasure);
             this.dots[i].goTo(pos, 0.5, this.nsteps/6); // TODO : scale
@@ -248,6 +251,7 @@ class Simulation {
     }
 
     pleasureToHome() {
+        this.phaseText.querySelector('.phase').innerHTML = "Going Home &#127968";
         for(let i = 0; i < this.ndots; ++i) {
             let pos = this.calculate_pos(this.homePos[this.dots[i].home], this.dots[i].home);
             this.dots[i].goTo(pos, 0.5, this.nsteps/6); // TODO : scale
@@ -314,19 +318,19 @@ class Simulation {
         colorSet: "greenShades",
         backgroundColor: "#264653",
         legend : {
-            fontColor: "#f1faee",
+            fontColor: "#b0b5ae",
         },
         animationEnabled: false,
         axisX:{
             title: "Days",
-            labelFontColor: "#f1faee",
+            labelFontColor: "#b0b5ae",
             minimum: -0.02,
-            titleFontColor: "#f1faee"
+            titleFontColor: "#b0b5ae"
         },
         axisY:{
             title:"Population",
-            labelFontColor: "#f1faee",
-            titleFontColor: "#f1faee"
+            labelFontColor: "#b0b5ae",
+            titleFontColor: "#b0b5ae"
         },
         toolTip:{
             shared: true
@@ -334,6 +338,7 @@ class Simulation {
         data: this.chartData
         });
         chart.render();
+        document.getElementsByClassName("canvasjs-chart-credit")[0].remove();
     }
 
     calculate_pos(pos, elem) {
