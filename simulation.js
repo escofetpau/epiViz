@@ -1,5 +1,5 @@
 class Simulation {
-    constructor(ndots, infectRatio, infectDuration, simDuration, phase){
+    constructor(ndots, infectRatio, infectDuration, simDuration, document){
         this.dots = [];
         this.ndots = ndots;
         this.nworks = Math.ceil(ndots/10);
@@ -15,7 +15,7 @@ class Simulation {
         this.workPos = [];
         this.pleasurePos = [];
         this.arrFib = [];
-        this.phaseText = phase;
+        this.document = document;
 
         this.chartData = [
             {
@@ -235,7 +235,7 @@ class Simulation {
     }
 
     homeToWork() {
-        this.phaseText.querySelector('.phase').innerHTML = "Going to Work &#127891";
+        this.document.querySelector('.phase').innerHTML = "Going to Work &#127891";
         for(let i = 0; i < this.ndots; ++i) {
             let pos = this.calculate_pos(this.workPos[this.dots[i].work], this.dots[i].work);
             this.dots[i].goTo(pos, 0.5, this.nsteps/6); // TODO : scale
@@ -243,7 +243,7 @@ class Simulation {
     }
 
     workToPleasure() {
-        this.phaseText.querySelector('.phase').innerHTML = "Going to Chill &#128131";
+        this.document.querySelector('.phase').innerHTML = "Going to Chill &#128131";
         for(let i = 0; i < this.ndots; ++i) {
             let pos = this.calculate_pos(this.pleasurePos[this.dots[i].pleasure], this.dots[i].pleasure);
             this.dots[i].goTo(pos, 0.5, this.nsteps/6); // TODO : scale
@@ -251,7 +251,7 @@ class Simulation {
     }
 
     pleasureToHome() {
-        this.phaseText.querySelector('.phase').innerHTML = "Going Home &#127968";
+        this.document.querySelector('.phase').innerHTML = "Going Home &#127968";
         for(let i = 0; i < this.ndots; ++i) {
             let pos = this.calculate_pos(this.homePos[this.dots[i].home], this.dots[i].home);
             this.dots[i].goTo(pos, 0.5, this.nsteps/6); // TODO : scale
@@ -268,6 +268,7 @@ class Simulation {
 
     stop() {
         this.d.clearInterval();
+        this.document.getElementById("button2").style.visibility = "visible";
     }
 
     update(sym) {
