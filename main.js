@@ -1,8 +1,5 @@
-const d = new DrawTool("myCanvas");
-d.setHeight(window.innerHeight);
-d.setWidth(window.innerWidth);
+const d = new DrawTool("myCanvas", window.innerHeight, window.innerWidth);
 d.background("green");
-
 
 var dot = new Dot(undefined, undefined, 1);
 

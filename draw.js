@@ -1,10 +1,10 @@
 // Author: Marc Amorós
 // Email: marc.amoros.trepat@gmail.com
 
-var DrawTool = function (canvas) {
-    if (canvas !== undefined) {
-        this.setup(canvas);
-    }
+var DrawTool = function (canvas, height, width) {
+    if (canvas !== undefined) this.setup(canvas);
+    if (height !== undefined) this.setHeight(height);
+    if (width !== undefined) this.setWidth(width);
 }
 
 DrawTool.prototype.setup = function (canvas) {
@@ -18,7 +18,6 @@ DrawTool.prototype.setup = function (canvas) {
 }    
 
 DrawTool.prototype.setHeight = function (height) {
-    console.log(this.canv)
     this.canv.height = height;
     this.width = this.canv.width;
     this.height = this.canv.height;
