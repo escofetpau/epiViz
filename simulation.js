@@ -308,5 +308,33 @@ class Simulation {
         });
         chart.render();
       }
+}
 
+
+function fibonacci_spiral_disc (num_points, k) {
+    var positions = [];
+    let gr = 1.6180339887498948482 
+    let ga = 2.39996322972865332   
+
+    for (let i = 1; i <= num_points; ++i) {
+        const r = Math.sqrt(i) * k;
+        const theta = ga * i;
+
+        const x = Math.cos(theta) * r;
+        const y = Math.sin(theta) * r;
+
+        positions.push({x, y});
+    }
+    return positions;
+}
+
+function fibonacci_spiral_disc_i (i) {
+    const k = 5;
+    let gr = 1.6180339887498948482
+    let ga = 2.39996322972865332
+    const r = Math.sqrt(i) * k;
+    const theta = ga * i;
+    const x = Math.cos(theta) * r;
+    const y = Math.sin(theta) * r;
+    return {x, y};    
 }
