@@ -42,7 +42,12 @@ function openModal() {
 }
 
 var aboutProjText = "Text1";
-var aboutUsText = "Text2";
+var aboutUsText = `We are a group of 3 students of the Polytechnic University of Barcelona (UPC). <br> 
+                  We have been attending to different hackathons during the past year, and love to make projects 
+                  together. To find out more about us, visit our websites: <br>
+                  <a href = "https://pauescofet.com/">Pau</a> <br>
+                  <a href = "http://marcamoros.me/">Marc</a> <br>
+                  <a href = "https://www.linkedin.com/in/nicolas-camerlynck-segarra-9220bb169/">Nicolas</a>`;
 
 function checkChoice(id) {
     let otherId;
@@ -65,5 +70,5 @@ function checkChoice(id) {
     other.style.backgroundColor = "white";
     other.style.color = "black";
 
-    document.getElementById("contentText").innerText = contentText;
+    document.getElementById("contentText").innerHTML = contentText;
 }
