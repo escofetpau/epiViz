@@ -42,7 +42,7 @@ p {
 
 .inputs-wrapper {
     top: 1em;
-    left: 1em;
+    left: 1.5em;
     position: absolute;
     display: grid;
 }
@@ -187,6 +187,7 @@ h2 {
     border: 0;
     outline: none;
     box-shadow: 0 4px #999;
+    z-index: 10;
 }
 
 #button2{
@@ -219,6 +220,105 @@ p {
     margin-bottom: 7px;
 }
 
+.tooltip {
+    font-size: smaller;
+    position: relative;
+    border-bottom: 0px dotted black;
+    z-index: ;
+}
+  
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 60%;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    padding-left: 10px;
+    padding-right: 10px;
+    
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 11;
+    top: 130%;
+    left: 22.5%;
+    margin-left: -60px;
+  }
+  
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
+.tooltip .tooltiptext::after {
+    content: " ";
+    position: absolute;
+    bottom: 100%;  /* At the top of the tooltip */
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent black transparent;
+}
+
+.tooltip .tooltiptext {
+    opacity: 0;
+    transition: opacity 1s;
+  }
+  
+  .tooltip:hover .tooltiptext {
+    opacity: 1;
+  }
+
+
+.tooltipleft {
+    position: relative;
+    display: inline-block;
+    border-bottom: 0px dotted black;
+    font-size: small;
+}
+  
+.tooltipleft .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    top: 15%;
+    right: 120%;
+}
+  
+.tooltipleft:hover .tooltiptext {
+    visibility: visible;
+}
+
+.tooltipleft .tooltiptext::after {
+    content: " ";
+    position: absolute;
+    top: 50%;
+    left: 100%; /* To the right of the tooltip */
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent transparent black;
+  }
+
+.tooltipleft .tooltiptext {
+opacity: 0;
+transition: opacity 1s;
+}
+
+.tooltipleft:hover .tooltiptext {
+opacity: 1;
+}
+
+  
 h3 {
     color: #b0b5ae;
 }
