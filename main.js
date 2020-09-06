@@ -8,7 +8,22 @@ function getInputsAndStart() {
 
   document.getElementById("button").style.visibility = "hidden";
 
-  const s = new Simulation(people, ratio, durationIllnes, days, document);
+  const control = document.getElementById("control").value;
+  let obj = {};
+
+  if (control !== "none") {
+    const mask = document.getElementById("mask").checked;
+    const distance = document.getElementById("distance").checked;
+    const hands = document.getElementById("hands").checked;
+
+    obj = {control, mask, distance, hands};
+  } else {
+    obj = {control};
+  }
+
+  document.getElementById("control-form").style.visibility = "hidden";
+
+  const s = new Simulation(people, ratio, durationIllnes, days, document, obj);
   s.start();
 }
 
@@ -28,7 +43,7 @@ function openModal() {
 
 
 var aboutProjText = `
-This project is a visualisation of the spreading of a pandemic. We have used a simple epidemiologic model called
+This project is a visualization of the spreading of a pandemic. We have used a simple epidemiologic model called
 <a href="https://en.wikipedia.org/wiki/Compartmental_models_in_epidemiology#The_SIR_model">SIR</a>, which defines 
 three states a person can be in: <i>Susceptible, Infectious and Recovered or Removed.</i> This is a simple model 
 that is capable of representing a lot of situations that we can find in a pandemic.
@@ -36,13 +51,19 @@ that is capable of representing a lot of situations that we can find in a pandem
 In our case, we decided to represent three scenarios. Each person (represented as a dot) has a family, a job, and
 goes to different recreational places, which change every day. You can think of these places as a Supermarket, a
 bar, a bus, a clothes shop, etc. A person wakes up at home, goes to work, and then goes to a random recreational
-location, and in each place interactuates (directly or inderectly, by touching the same things as others) with
+location, and in each place interacts (directly or indirectly, by touching the same things as others) with
 every person that is or was there. Each infected person has a probability (infection ratio) of infecting every 
-person he has interactuated with. This ratio is based on the sanity measures both interactors are doing, such as
+person he has interacted with. This ratio is based on the sanity measures both interactors are doing, such as
 cleaning your hands frequently, wearing mask and keeping social distance.  
 <br><br>
+
 `;
-var aboutUsText = "Text2";
+var aboutUsText = `We are a group of 3 students of the Polytechnic University of Barcelona (UPC). <br> 
+                  We have been attending to different hackathons during the past year, and love to make projects 
+                  together. To find out more about us, visit our websites: <br>
+                  <a href = "https://pauescofet.com/">Pau</a> <br>
+                  <a href = "http://marcamoros.me/">Marc</a> <br>
+                  <a href = "https://www.linkedin.com/in/nicolas-camerlynck-segarra-9220bb169/">Nicolas</a>`;
 
 document.getElementById("contentText").innerHTML = aboutProjText;
 

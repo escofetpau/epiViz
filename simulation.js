@@ -1,5 +1,5 @@
 class Simulation {
-    constructor(ndots, infectRatio, infectDuration, simDuration, document){
+    constructor(ndots, infectRatio, infectDuration, simDuration, document, obj){
         this.dots = [];
         this.ndots = ndots;
         this.nworks = Math.ceil(ndots/10);
@@ -16,6 +16,7 @@ class Simulation {
         this.pleasurePos = [];
         this.arrFib = [];
         this.document = document;
+        this.obj = obj;
 
         this.chartData = [
             {
@@ -53,9 +54,38 @@ class Simulation {
         this.initializeDots();
         this.initializePosWork();
         this.initializePosPleasure();
+        if (this.obj.control !== "none") this.initializeFocus();
 
         this.addColorsCanvasJS();
 
+    }
+
+    initializeFocus(){
+        if (this.obj.control === "family"){
+            const [infected, homers] = this.filter("home", 0);
+            let prot = 0;
+            if (this.obj.mask) prot = prot + this.infectRatio/6;
+            if (this.obj.distance) prot = prot + this.infectRatio/6;
+            if (this.obj.hands) prot = prot + this.infectRatio/6;
+
+            for (let i = 0; i < this.nhomes; i++){
+                homers[i].focus = true;
+                homers[i].infectRatio -= prot;
+            }
+        }
+
+        if (this.obj.control === "company"){
+            const [infected, workers] = this.filter("work", 0);
+            let prot = 0;
+            if (this.obj.mask) prot = prot + this.infectRatio/6;
+            if (this.obj.distance) prot = prot + this.infectRatio/6;
+            if (this.obj.hands) prot = prot + this.infectRatio/6;
+
+            for (let i = 0; i < this.nworks; i++){
+                workers[i].focus = true;
+                workers[i].infectRatio -= prot;
+            }
+        }
     }
 
     initializePosHome() {
@@ -319,6 +349,7 @@ class Simulation {
 
     plotChart() {
         this.updateDataChart();
+        document.getElementById("chartContainer").style.visibility = "visible";
         var chart = new CanvasJS.Chart("chartContainer", {
         colorSet: "greenShades",
         backgroundColor: "#264653",
