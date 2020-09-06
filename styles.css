@@ -208,9 +208,12 @@ h2 {
 }
 
 #button2{
-    margin-top: 10%;
+    
+    position: absolute;
+    top: 12em;
+    left: 1em;
+    margin-top: 15%;
     margin-left: 8%;
-    margin-right: auto;
     width: 50%;
     border-radius: 5px;
     background-color: #d3d3d3;
@@ -246,6 +249,7 @@ h2 {
     position: absolute;
     top: 12em;
     left: 1em;
+    margin-left: 8%;
     width: 50%;
     border-radius: 5px;
     background-color: #d3d3d3;
