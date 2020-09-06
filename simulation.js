@@ -56,35 +56,40 @@ class Simulation {
         this.initializePosPleasure();
         if (this.obj.control !== "none") this.initializeFocus();
 
+
         this.addColorsCanvasJS();
 
     }
 
     initializeFocus(){
         if (this.obj.control === "family"){
-            const [infected, homers] = this.filter("home", 0);
+            const [infected, homers] = this.filter("home", 1);
             let prot = 0;
-            if (this.obj.mask) prot = prot + this.infectRatio/6;
-            if (this.obj.distance) prot = prot + this.infectRatio/6;
-            if (this.obj.hands) prot = prot + this.infectRatio/6;
 
-            for (let i = 0; i < this.nhomes; i++){
+            if (this.obj.mask) prot += this.totalInfectRatio/6;
+            if (this.obj.distance) prot += this.totalInfectRatio/6;
+            if (this.obj.hands) prot += this.totalInfectRatio/6;
+
+
+            for (let i = 0; i < homers.length; i++){
                 homers[i].focus = true;
                 homers[i].infectRatio -= prot;
             }
+            this.homePos[1] = {x:0, y:0}
         }
 
         if (this.obj.control === "company"){
-            const [infected, workers] = this.filter("work", 0);
+            const [infected, workers] = this.filter("work", 1);
             let prot = 0;
             if (this.obj.mask) prot = prot + this.infectRatio/6;
             if (this.obj.distance) prot = prot + this.infectRatio/6;
             if (this.obj.hands) prot = prot + this.infectRatio/6;
 
-            for (let i = 0; i < this.nworks; i++){
+            for (let i = 0; i < workers.length; i++){
                 workers[i].focus = true;
                 workers[i].infectRatio -= prot;
             }
+            this.workPos[1] = {x:0, y:0}
         }
     }
 
