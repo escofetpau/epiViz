@@ -1,5 +1,5 @@
 class Simulation {
-    constructor(ndots, infectRatio, infectDuration, simDuration, mask, distance, hands, document, obj){
+    constructor(ndots, infectRatio, infectDuration, simDuration, maskRatio, distanceRatio, handsRatio, document, obj){
         this.dots = [];
         this.ndots = ndots;
         this.nworks = Math.ceil(ndots/10);
@@ -17,6 +17,9 @@ class Simulation {
         this.arrFib = [];
         this.document = document;
         this.obj = obj;
+        this.maskRatio = maskRatio;
+        this.distanceRatio = distanceRatio;
+        this.handsRatio = handsRatio;
 
         this.chartData = [
             {
@@ -46,6 +49,33 @@ class Simulation {
             this.dots[i] = new Dot(home, Math.floor(Math.random() * this.nworks), -1, this.totalInfectRatio, initPos);
         }
         this.dots[0].state = 0; // TODO: infectem un dot;
+
+        // Add maskRatio
+        let pool = [...this.dots];
+        for (let i = 0; i < this.ndots * this.maskRatio/100; ++i) {
+            let r = Math.floor(Math.random() * pool.length);
+            let dot = pool[r];
+            pool.splice(r, 1);
+            dot.infectRatio -= this.totalInfectRatio/6;
+        }
+
+        // Add distanceRatio
+        pool = [...this.dots];
+        for (let i = 0; i < this.ndots * this.distanceRatio/100; ++i) {
+            let r = Math.floor(Math.random() * pool.length);
+            let dot = pool[r];
+            pool.splice(r, 1);
+            dot.infectRatio -= this.totalInfectRatio/6;
+        }
+
+        // Add handsRatio
+        pool = [...this.dots];
+        for (let i = 0; i < this.ndots * this.handsRatio/100; ++i) {
+            let r = Math.floor(Math.random() * pool.length);
+            let dot = pool[r];
+            pool.splice(r, 1);
+            dot.infectRatio -= this.totalInfectRatio/6;
+        }
     }
 
     initialize() {
