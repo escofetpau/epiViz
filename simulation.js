@@ -388,8 +388,8 @@ class Simulation {
         this.d = new DrawTool("myCanvas", window.innerHeight, window.innerWidth);
         this.d.translate(this.d.width/2, this.d.height/2);
         this.initialize();
-
-        this.d.setInterval(() => this.update(this), 10);
+        this.dotsAcc = 0.25;
+        this.d.setInterval(() => this.update(this), 5);
     }
 
     stop() {
