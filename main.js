@@ -1,4 +1,4 @@
-
+let s;
 
 function getInputsAndStart() {
   const people = document.getElementById("textInput1").value;
@@ -48,9 +48,14 @@ function getInputsAndStart() {
   }
   
   
+  document.getElementById("button3").style.visibility = "visible";
 
-  const s = new Simulation(people, ratio, durationIllnes, days, mask1, distance1, hands1, document, obj);
+  s = new Simulation(people, ratio, durationIllnes, days, mask1, distance1, hands1, document, obj);
   s.start();
+}
+
+function stopSym() {
+  s.stop();
 }
 
 function clearScreen() {

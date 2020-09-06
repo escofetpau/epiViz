@@ -53,29 +53,31 @@
         <p>Percentage of masks</p>
 
         <div class="input-values tooltip" >
-            <input type="range" step = "1" name="rangeInput" min="1" max="100" value="50" class="slider" id="myRange2" oninput="updateTextInput(this.value, 'textInput5')">
-            <input class = "outputvalue" type="text" id="textInput5" value="50" readonly>
+            <input type="range" step = "1" name="rangeInput" min="1" max="100" value="20" class="slider" id="myRange2" oninput="updateTextInput(this.value, 'textInput5')">
+            <input class = "outputvalue" type="text" id="textInput5" value="20" readonly>
             <span class="tooltiptext">The % of the people wearing a mask</span>
         </div>
 
         <p>Percentage of hand washing</p>
 
         <div class="input-values tooltip" >
-            <input type="range" step = "1" name="rangeInput" min="1" max="100" value="50" class="slider" id="myRange2" oninput="updateTextInput(this.value, 'textInput6')">
-            <input class = "outputvalue" type="text" id="textInput6" value="50" readonly>
+            <input type="range" step = "1" name="rangeInput" min="1" max="100" value="20" class="slider" id="myRange2" oninput="updateTextInput(this.value, 'textInput6')">
+            <input class = "outputvalue" type="text" id="textInput6" value="20" readonly>
             <span class="tooltiptext">The % of the people washing their hands regularly</span>
         </div>
 
         <p>Percentage of social distancing</p>
 
         <div class="input-values tooltip" >
-            <input type="range" step = "1" name="rangeInput" min="1" max="100" value="50" class="slider" id="myRange2" oninput="updateTextInput(this.value, 'textInput7')">
-            <input class = "outputvalue" type="text" id="textInput7" value="50" readonly>
+            <input type="range" step = "1" name="rangeInput" min="1" max="100" value="20" class="slider" id="myRange2" oninput="updateTextInput(this.value, 'textInput7')">
+            <input class = "outputvalue" type="text" id="textInput7" value="20" readonly>
             <span class="tooltiptext">The % of the people doing social distancing</span>
         </div>
 
         <button type="button" id="button" onclick="getInputsAndStart()">Start simulation</button>
         <button type="button" id="button2" onclick="clearScreen()">Clear Screen</button>
+        <button type="button" id="button3" onclick="stopSym()">Stop Sym</button>
+
     </div>
 
     <div class="inputs-wrapper2" id="control-form">

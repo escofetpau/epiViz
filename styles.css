@@ -218,6 +218,7 @@ h2 {
     border: 0;
     outline: none;
     box-shadow: 0 4px #999;
+    z-index: 10;
     visibility: hidden;
 }
 
@@ -231,6 +232,42 @@ h2 {
     transform: translateY(4px);
 }
 
+#button2:hover {
+    opacity: 1; 
+}
+
+#button2:active {
+    background-color: #d3d3d3;
+    box-shadow: 0 2px #666;
+    transform: translateY(4px);
+}
+
+#button3{
+    position: absolute;
+    top: 12em;
+    left: 1em;
+    width: 50%;
+    border-radius: 5px;
+    background-color: #d3d3d3;
+    opacity: 0.7;
+    border: 0;
+    outline: none;
+    box-shadow: 0 4px #999;
+    z-index: 10;
+    visibility: hidden;
+}
+
+#button3:hover {
+    opacity: 1; 
+}
+
+#button3:active {
+    background-color: #d3d3d3;
+    box-shadow: 0 2px #666;
+    transform: translateY(4px);
+}
+
+
 p {
     text-align: justify;
     margin-top: 15px;
@@ -241,7 +278,6 @@ p {
     font-size: smaller;
     position: relative;
     border-bottom: 0px dotted black;
-    z-index: ;
 }
   
 .tooltip .tooltiptext {
