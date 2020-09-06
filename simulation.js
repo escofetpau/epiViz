@@ -93,27 +93,25 @@ class Simulation {
     }
 
     initializeFocus() {
+        let ratioChange = 1;
+
+        if (this.obj.mask) ratioChange *= 0.7;
+        if (this.obj.distance)  ratioChange *= 0.3;
+        if (this.obj.hands)  ratioChange *= 0.6;
+
         if (this.obj.control === "family"){
             const [infected, homers] = this.filter("home", 1);
-            let prot = 0;
 
-            if (this.obj.mask) prot += this.totalInfectRatio/6;
-            if (this.obj.distance) prot += this.totalInfectRatio/6;
-            if (this.obj.hands) prot += this.totalInfectRatio/6;
-
+            this.homePos[1] = {x:0, y:0};
             for (let i = 0; i < homers.length; i++) {
                 homers[i].focus = true;
-                homers[i].infectRatio -= prot;
+                homers[i].infectRatio *= ratioChange;
+            
+                let initPos = this.calculate_pos(this.homePos[1], 1);
+                homers[i].x = initPos.x;
+                homers[i].y = initPos.y;
             }
             
-            // Move house focused people to the center
-            this.homePos[1] = {x:0, y:0};
-            for (let i = 4; i < 8; ++i) {
-                let initPos = this.calculate_pos(this.homePos[1], 1);
-                this.dots[i].x = initPos.x;
-                this.dots[i].y = initPos.y;
-            }
-
             // Set nPeople
             if (this.obj.nPeople >= 4) {
                 let n = this.obj.nPeople - 4;
@@ -124,11 +122,11 @@ class Simulation {
                     this.dots[i].x = initPos.x;
                     this.dots[i].y = initPos.y;
                     this.dots[i].focus = true;
+                    this.dots[i].infectRatio *= ratioChange;
                 }
             }
             else {
                 let n = 4 - this.obj.nPeople;
-                console.log(n)
                 for (let i = 4; i < 4 + n; ++i) {
                     this.dots[i].home = 2;
                     let initPos = this.calculate_pos(this.homePos[2], 2);
@@ -141,14 +139,9 @@ class Simulation {
 
         if (this.obj.control === "company") {
             const [infected, workers] = this.filter("work", 1);
-            let prot = 0;
-            if (this.obj.mask) prot = prot + this.totalInfectRatio/6;
-            if (this.obj.distance) prot = prot + this.totalInfectRatio/6;
-            if (this.obj.hands) prot = prot + this.totalInfectRatio/6;
-
-            for (let i = 0; i < workers.length; i++){
+            for (let i = 0; i < workers.length; i++) {
                 workers[i].focus = true;
-                workers[i].infectRatio -= prot;
+                this.dots[i].infectRatio *= ratioChange;
             }
 
             this.workPos[1] = {x: 0, y: 0};
@@ -165,6 +158,7 @@ class Simulation {
                     if (dot.work !== 1) {
                         dot.work = 1;
                         dot.focus = true;
+                        dot.infectRatio *= ratioChange;
                         counter++;
                     }
                     if (counter === n) break;
@@ -281,7 +275,6 @@ class Simulation {
                         if(k !== p && workers[p].state === -1) {
                             let infectRatio = workers[k].infectRatio + workers[p].infectRatio;
                             if (Math.random() < infectRatio) {
-                                console.log(infectRatio)                                
                                 workers[p].infect();
                             }                            
                         }
@@ -323,7 +316,6 @@ class Simulation {
                     for(let p = 0; p < pleasurers.length; ++p) {
                         if(k !== p && pleasurers[p].state === -1) {
                             let infectRatio = pleasurers[k].infectRatio + pleasurers[p].infectRatio;
-                            console.log(infectRatio)
                             if (Math.random() < infectRatio) {
                                 pleasurers[p].infect();
                             }                            
