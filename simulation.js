@@ -354,6 +354,7 @@ class Simulation {
 
     plotChart() {
         this.updateDataChart();
+        document.getElementById("chartContainer").style.visibility = "visible";
         var chart = new CanvasJS.Chart("chartContainer", {
         colorSet: "greenShades",
         backgroundColor: "#264653",
