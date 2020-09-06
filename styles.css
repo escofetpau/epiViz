@@ -23,7 +23,24 @@ p {
     color: #b0b5ae;
 }
 
+#summary-basic {
+    visibility: hidden;
+    top: 1em;
+    left: 1.5em;
+    position: absolute;
+    color: #b0b5ae;
+}
+
+#summary-control {
+    visibility: hidden;
+    top: 5em;
+    right: 1.5em;
+    position: absolute;
+    color: #b0b5ae;
+}
+
 #chartContainer {
+    visibility: hidden;
     position: absolute;
     left: 0;
     right: 0;

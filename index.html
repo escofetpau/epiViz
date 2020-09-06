@@ -10,8 +10,11 @@
 <body>
     <canvas id="myCanvas"></canvas>
     <h1>CoViz-19</h1>
+
+    <div id="summary-basic"></div>
+    <div id="summary-control"></div>
     
-    <div class="inputs-wrapper">
+    <div class="inputs-wrapper" id="basic-form">
         <p>Number of people</p>
 
         <div class="input-values tooltip" >
@@ -70,9 +73,7 @@
             <span class="tooltiptext">The % of the people doing social distancing</span>
         </div>
 
-
-
-        <button type="button" id="button" onclick="startSimulation()">Start simulation</button>
+        <button type="button" id="button" onclick="getInputsAndStart()">Start simulation</button>
         <button type="button" id="button2" onclick="clearScreen()">Clear Screen</button>
     </div>
 
@@ -96,7 +97,7 @@
 
     <script>
         function updateTextInput(val, id) {
-            document.getElementById(id).value=val; 
+            document.getElementById(id).value = val; 
         }
         
     </script>
@@ -116,7 +117,8 @@
                     <svg class="float-right button-cursor" onclick=closeModal() height="20px" width="20px" viewBox="0 0 365.696 365.696"><path d="m243.1875 182.859375 113.132812-113.132813c12.5-12.5 12.5-32.765624 0-45.246093l-15.082031-15.082031c-12.503906-12.503907-32.769531-12.503907-45.25 0l-113.128906 113.128906-113.132813-113.152344c-12.5-12.5-32.765624-12.5-45.246093 0l-15.105469 15.082031c-12.5 12.503907-12.5 32.769531 0 45.25l113.152344 113.152344-113.128906 113.128906c-12.503907 12.503907-12.503907 32.769531 0 45.25l15.082031 15.082031c12.5 12.5 32.765625 12.5 45.246093 0l113.132813-113.132812 113.128906 113.132812c12.503907 12.5 32.769531 12.5 45.25 0l15.082031-15.082031c12.5-12.503906 12.5-32.769531 0-45.25zm0 0"/></svg>
                 </div>
             </div>
-            <p id="contentText" style="color: black;">Text1</p>
+            <p id="contentText" style="color: black;">
+            </p>
         </div>
     </div>
 
@@ -132,12 +134,6 @@
     <script src="simulation.js" type="text/javascript"></script>
     <script src="dot.js" type="text/javascript"></script>
     <script src="main.js" type="text/javascript"></script>
-    <script>
-        function startSimulation() {
-            getInputsAndStart()
-        }
-    </script>
-
 
 </body>
 
