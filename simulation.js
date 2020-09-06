@@ -1,5 +1,5 @@
 class Simulation {
-    constructor(ndots, infectRatio, infectDuration, simDuration, document, obj){
+    constructor(ndots, infectRatio, infectDuration, simDuration, mask, distance, hands, document, obj){
         this.dots = [];
         this.ndots = ndots;
         this.nworks = Math.ceil(ndots/10);
@@ -81,9 +81,9 @@ class Simulation {
         if (this.obj.control === "company"){
             const [infected, workers] = this.filter("work", 1);
             let prot = 0;
-            if (this.obj.mask) prot = prot + this.infectRatio/6;
-            if (this.obj.distance) prot = prot + this.infectRatio/6;
-            if (this.obj.hands) prot = prot + this.infectRatio/6;
+            if (this.obj.mask) prot = prot + this.totalInfectRatio/6;
+            if (this.obj.distance) prot = prot + this.totalInfectRatio/6;
+            if (this.obj.hands) prot = prot + this.totalInfectRatio/6;
 
             for (let i = 0; i < workers.length; i++){
                 workers[i].focus = true;
