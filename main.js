@@ -52,6 +52,7 @@ function getInputsAndStart() {
   document.getElementById("button3").style.visibility = "visible";
 
   s = new Simulation(people, ratio, durationIllnes, days, mask1, distance1, hands1, document, obj);
+  // s = new Simulation(10, ratio, durationIllnes, days, mask1, distance1, hands1, document, obj);
   s.start();
 }
 

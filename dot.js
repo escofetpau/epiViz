@@ -5,7 +5,7 @@ class Dot {
     this.pleasure = 0;
     this.state = state;
     this.phasesSick = 0;
-    this.infectRatio = infectRatio/2;
+    this.infectRatio = parseFloat(infectRatio);
     this.focus = false;
 
     // -1 S

@@ -20,6 +20,7 @@ class Simulation {
         this.maskRatio = maskRatio;
         this.distanceRatio = distanceRatio;
         this.handsRatio = handsRatio;
+        this.dotsAcc = 0.5;
 
         this.chartData = [
             {
@@ -56,7 +57,7 @@ class Simulation {
             let r = Math.floor(Math.random() * pool.length);
             let dot = pool[r];
             pool.splice(r, 1);
-            dot.infectRatio -= this.totalInfectRatio/6;
+            dot.infectRatio *= 0.7;
         }
 
         // Add distanceRatio
@@ -65,7 +66,7 @@ class Simulation {
             let r = Math.floor(Math.random() * pool.length);
             let dot = pool[r];
             pool.splice(r, 1);
-            dot.infectRatio -= this.totalInfectRatio/6;
+            dot.infectRatio *= 0.3;
         }
 
         // Add handsRatio
@@ -74,7 +75,7 @@ class Simulation {
             let r = Math.floor(Math.random() * pool.length);
             let dot = pool[r];
             pool.splice(r, 1);
-            dot.infectRatio -= this.totalInfectRatio/6;
+            dot.infectRatio *= 0.6;
         }
     }
 
@@ -280,6 +281,7 @@ class Simulation {
                         if(k !== p && workers[p].state === -1) {
                             let infectRatio = workers[k].infectRatio + workers[p].infectRatio;
                             if (Math.random() < infectRatio) {
+                                console.log(infectRatio)                                
                                 workers[p].infect();
                             }                            
                         }
@@ -321,6 +323,7 @@ class Simulation {
                     for(let p = 0; p < pleasurers.length; ++p) {
                         if(k !== p && pleasurers[p].state === -1) {
                             let infectRatio = pleasurers[k].infectRatio + pleasurers[p].infectRatio;
+                            console.log(infectRatio)
                             if (Math.random() < infectRatio) {
                                 pleasurers[p].infect();
                             }                            
@@ -361,7 +364,7 @@ class Simulation {
         this.document.querySelector('.phase').innerHTML = "Going to Work &#127891";
         for(let i = 0; i < this.ndots; ++i) {
             let pos = this.calculate_pos(this.workPos[this.dots[i].work], this.dots[i].work);
-            this.dots[i].goTo(pos, 0.5, this.nsteps/6); // TODO : scale
+            this.dots[i].goTo(pos, this.dotsAcc, this.nsteps/6); // TODO : scale
         }
     }
 
@@ -369,7 +372,7 @@ class Simulation {
         this.document.querySelector('.phase').innerHTML = "Going to Chill &#128131";
         for(let i = 0; i < this.ndots; ++i) {
             let pos = this.calculate_pos(this.pleasurePos[this.dots[i].pleasure], this.dots[i].pleasure);
-            this.dots[i].goTo(pos, 0.5, this.nsteps/6); // TODO : scale
+            this.dots[i].goTo(pos, this.dotsAcc, this.nsteps/6); // TODO : scale
         }
     }
 
@@ -377,7 +380,7 @@ class Simulation {
         this.document.querySelector('.phase').innerHTML = "Going Home &#127968";
         for(let i = 0; i < this.ndots; ++i) {
             let pos = this.calculate_pos(this.homePos[this.dots[i].home], this.dots[i].home);
-            this.dots[i].goTo(pos, 0.5, this.nsteps/6); // TODO : scale
+            this.dots[i].goTo(pos, this.dotsAcc, this.nsteps/6); // TODO : scale
         }
     }
 
