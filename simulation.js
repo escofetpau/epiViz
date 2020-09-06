@@ -91,7 +91,7 @@ class Simulation {
 
     }
 
-    initializeFocus(){
+    initializeFocus() {
         if (this.obj.control === "family"){
             const [infected, homers] = this.filter("home", 1);
             let prot = 0;
@@ -100,15 +100,45 @@ class Simulation {
             if (this.obj.distance) prot += this.totalInfectRatio/6;
             if (this.obj.hands) prot += this.totalInfectRatio/6;
 
-
-            for (let i = 0; i < homers.length; i++){
+            for (let i = 0; i < homers.length; i++) {
                 homers[i].focus = true;
                 homers[i].infectRatio -= prot;
             }
-            this.homePos[1] = {x:0, y:0}
+            
+            // Move house focused people to the center
+            this.homePos[1] = {x:0, y:0};
+            for (let i = 4; i < 8; ++i) {
+                let initPos = this.calculate_pos(this.homePos[1], 1);
+                this.dots[i].x = initPos.x;
+                this.dots[i].y = initPos.y;
+            }
+
+            // Set nPeople
+            if (this.obj.nPeople >= 4) {
+                let n = this.obj.nPeople - 4;
+                for (let i = this.dots.length - n; i < this.dots.length; ++i) {
+                    this.dots[i].home = 1;
+                    // Calc init pos
+                    let initPos = this.calculate_pos(this.homePos[1], 1);
+                    this.dots[i].x = initPos.x;
+                    this.dots[i].y = initPos.y;
+                    this.dots[i].focus = true;
+                }
+            }
+            else {
+                let n = 4 - this.obj.nPeople;
+                console.log(n)
+                for (let i = 4; i < 4 + n; ++i) {
+                    this.dots[i].home = 2;
+                    let initPos = this.calculate_pos(this.homePos[2], 2);
+                    this.dots[i].x = initPos.x;
+                    this.dots[i].y = initPos.y;
+                    this.dots[i].focus = false;
+                }
+            }
         }
 
-        if (this.obj.control === "company"){
+        if (this.obj.control === "company") {
             const [infected, workers] = this.filter("work", 1);
             let prot = 0;
             if (this.obj.mask) prot = prot + this.totalInfectRatio/6;
@@ -119,7 +149,33 @@ class Simulation {
                 workers[i].focus = true;
                 workers[i].infectRatio -= prot;
             }
-            this.workPos[1] = {x:0, y:0}
+
+            this.workPos[1] = {x: 0, y: 0};
+
+            // Set nPeople
+            let currentNPeople = workers.length;
+            
+            if (this.obj.nPeople >= currentNPeople) {
+                let n = this.obj.nPeople - currentNPeople;
+                
+                let counter = 0;
+                for (let i = 1; i < this.dots.length; ++i) {
+                    let dot = this.dots[i];
+                    if (dot.work !== 1) {
+                        dot.work = 1;
+                        dot.focus = true;
+                        counter++;
+                    }
+                    if (counter === n) break;
+                }
+            }
+            else {
+                let n = currentNPeople - this.obj.nPeople;
+                for (let i = 0; i < n; ++i) {
+                    workers[i].work = 2;
+                    workers[i].focus = false;
+                }
+            }
         }
     }
 

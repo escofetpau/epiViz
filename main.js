@@ -16,9 +16,10 @@ function getInputsAndStart() {
   const mask = document.getElementById("mask").checked;
   const distance = document.getElementById("distance").checked;
   const hands = document.getElementById("hands").checked;
+  const nPeople = document.getElementById("nPeople").value;
 
   if (control !== "none") {
-    obj = {control, mask, distance, hands};
+    obj = {control, mask, distance, hands, nPeople};
   } else {
     obj = {control};
   }
