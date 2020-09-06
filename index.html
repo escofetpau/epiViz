@@ -2,13 +2,14 @@
 <html>
 
 <head>
+    <title>CoViz-19</title>
     <link rel="stylesheet" href="./styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Kufam:wght@600&display=swap" rel="stylesheet">
 </head>
 
 <body>
     <canvas id="myCanvas"></canvas>
-    <h1>CoViz</h1>
+    <h1>CoViz-19</h1>
     
     <div class="inputs-wrapper">
         <p>Number of people</p>
@@ -73,9 +74,26 @@
 
         <button type="button" id="button" onclick="startSimulation()">Start simulation</button>
         <button type="button" id="button2" onclick="clearScreen()">Clear Screen</button>
-
-        
     </div>
+
+    <div class="inputs-wrapper2" id="control-form">
+        <label for="control">Take control: </label>
+        <select name="control" id="control">
+            <option value="none">None</option>
+            <option value="family">Family</option>
+            <option value="company">Company</option>
+        </select><br><br>
+
+        <input type="checkbox" id="mask" name="mask">
+        <label for="mask">Wear a mask</label><br><br>
+
+        <input type="checkbox" id="distance" name="distance">
+        <label for="distance">Keep Social Distancing</label><br><br>
+
+        <input type="checkbox" id="hands" name="hands">
+        <label for="hands">Wash Hands</label><br><br>
+    </div>
+
     <script>
         function updateTextInput(val, id) {
             document.getElementById(id).value=val; 
@@ -91,7 +109,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <div class="text-center">
-                    <h2 id="aboutProj" class="choice button-cursor" onclick="checkChoice(this.id)">About the project</h2>
+                    <h2 id="aboutProj" class="choice-clicked button-cursor" onclick="checkChoice(this.id)">About the project</h2>
                     <h2 id="aboutUs" class="choice button-cursor" onclick="checkChoice(this.id)">About us</h2>
                 </div>
                 <div>

@@ -8,7 +8,22 @@ function getInputsAndStart() {
 
   document.getElementById("button").style.visibility = "hidden";
 
-  const s = new Simulation(people, ratio, durationIllnes, days, document);
+  const control = document.getElementById("control").value;
+  let obj = {};
+
+  if (control !== "none") {
+    const mask = document.getElementById("mask").checked;
+    const distance = document.getElementById("distance").checked;
+    const hands = document.getElementById("hands").checked;
+
+    obj = {control, mask, distance, hands};
+  } else {
+    obj = {control};
+  }
+
+  document.getElementById("control-form").style.visibility = "hidden";
+
+  const s = new Simulation(people, ratio, durationIllnes, days, document, obj);
   s.start();
 }
 

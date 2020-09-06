@@ -1,18 +1,20 @@
 class Dot {
-  constructor(home, work, state, infectRatio, homePos) {
+  constructor(home, work, state, infectRatio, initPos) {
     this.home = home;
     this.work = work;
     this.pleasure = 0;
     this.state = state;
     this.phasesSick = 0;
     this.infectRatio = infectRatio/2;
+    this.focus = false;
 
     // -1 S
     //  0 I
     //  1 R
 
-    this.x = homePos[home].x;
-    this.y = homePos[home].y;
+    this.x = initPos.x;
+    this.y = initPos.y;
+
     this.vel = {x: 0, y: 0};
     this.acc = {x: 0, y: 0};
     this.size = 3;
@@ -49,6 +51,7 @@ class Dot {
   */
   show(d) {
     d.circle(this.x, this.y, this.size, {color: this.stateColor()});
+    if (this.focus) d.circle(this.x, this.y, this.size + 2, {sColor: "yellow", fill: false, stroke: true});
   }
 
   stateColor() {

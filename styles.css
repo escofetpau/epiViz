@@ -51,6 +51,13 @@ p {
     display: grid;
     grid-template-columns: 65% 15%;
   }
+
+.inputs-wrapper2 {
+    position: absolute;
+    top: 2em;
+    right: 1em;
+    color: #b0b5ae;
+}
   
   
   .scrollbar {
@@ -154,9 +161,15 @@ h2 {
     color: black;
 }
 
-.choice:hover {
+.choice-clicked {
     background-color: black;
     color: white;
+    
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-top: 5px;
+    border-radius: 5px;
+
 }
 
 .text-center {
@@ -306,3 +319,6 @@ opacity: 1;
 }
 
   
+h3 {
+    color: #b0b5ae;
+}
